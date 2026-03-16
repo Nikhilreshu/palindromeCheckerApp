@@ -1,0 +1,78 @@
+import java.util.*;
+
+public class UseCase13PalindromeCheckerApp {
+
+    // UC1: Simple Two-Pointer Check
+    public static boolean twoPointerPalindrome(String input) {
+        String str = input.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+        int start = 0, end = str.length() - 1;
+        while (start < end) {
+            if (str.charAt(start) != str.charAt(end)) return false;
+            start++; end--;
+        }
+        return true;
+    }
+
+    // UC6: Stack + Queue Approach
+    public static boolean stackQueuePalindrome(String input) {
+        String str = input.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+        Queue<Character> queue = new LinkedList<>();
+        Stack<Character> stack = new Stack<>();
+        for (char ch : str.toCharArray()) {
+            queue.add(ch); stack.push(ch);
+        }
+        while (!queue.isEmpty()) {
+            if (queue.remove() != stack.pop()) return false;
+        }
+        return true;
+    }
+
+    // UC7: Deque Approach
+    public static boolean dequePalindrome(String input) {
+        String str = input.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+        Deque<Character> deque = new ArrayDeque<>();
+        for (char ch : str.toCharArray()) deque.addLast(ch);
+        while (deque.size() > 1) {
+            if (deque.removeFirst() != deque.removeLast()) return false;
+        }
+        return true;
+    }
+
+    public static void main(String[] args) {
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("=== Performance Comparison of Palindrome Algorithms ===");
+        System.out.print("Enter a string: ");
+        String input = scanner.nextLine();
+
+        // Map to store results
+        Map<String, Long> timings = new LinkedHashMap<>();
+
+        // UC1: Two-Pointer
+        long start = System.nanoTime();
+        boolean res1 = twoPointerPalindrome(input);
+        long end = System.nanoTime();
+        timings.put("Two-Pointer", end - start);
+
+        // UC6: Stack + Queue
+        start = System.nanoTime();
+        boolean res2 = stackQueuePalindrome(input);
+        end = System.nanoTime();
+        timings.put("Stack + Queue", end - start);
+
+        // UC7: Deque
+        start = System.nanoTime();
+        boolean res3 = dequePalindrome(input);
+        end = System.nanoTime();
+        timings.put("Deque", end - start);
+
+        // Display results
+        System.out.println("\nResults:");
+        System.out.println("Palindrome Check: " + (res1 ? "Yes" : "No") + "\n");
+
+        System.out.println("Execution Time (nanoseconds):");
+        timings.forEach((k,v) -> System.out.println(k + ": " + v + " ns"));
+
+        scanner.close();
+    }
+}
