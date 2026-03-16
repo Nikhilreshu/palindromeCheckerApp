@@ -1,0 +1,52 @@
+import java.util.Scanner;
+
+// UC11: Object-Oriented Palindrome Service
+class PalindromeChecker {
+
+    // Method to check if a string is palindrome
+    public boolean checkPalindrome(String input) {
+
+        // Normalize input (remove spaces & make lowercase)
+        String normalized = input.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+
+        int start = 0;
+        int end = normalized.length() - 1;
+
+        while (start < end) {
+            if (normalized.charAt(start) != normalized.charAt(end)) {
+                return false;
+            }
+            start++;
+            end--;
+        }
+
+        return true;
+    }
+}
+
+public class UseCase11PalindromeCheckerApp {
+
+    public static void main(String[] args) {
+
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("=== Object-Oriented Palindrome Service ===");
+        System.out.print("Enter a string: ");
+        String input = scanner.nextLine();
+
+        // Step 1: Create instance of PalindromeChecker
+        PalindromeChecker checker = new PalindromeChecker();
+
+        // Step 2: Call the method
+        boolean result = checker.checkPalindrome(input);
+
+        // Step 3: Display result
+        if (result) {
+            System.out.println("The string \"" + input + "\" is a Palindrome.");
+        } else {
+            System.out.println("The string \"" + input + "\" is NOT a Palindrome.");
+        }
+
+        scanner.close();
+    }
+}
