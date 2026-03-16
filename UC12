@@ -1,0 +1,12 @@
+import java.util.*;
+
+// Step 1: Define Strategy Interface
+interface PalindromeStrategy {
+    boolean isPalindrome(String input);
+}
+
+// Step 2: Stack-Based Strategy
+class StackStrategy implements PalindromeStrategy {
+    @Override
+    public boolean isPalindrome(String input) {
+       
